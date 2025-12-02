@@ -1,0 +1,51 @@
+##################################
+# FRONTEND (React)
+##################################
+
+# dependencies
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.js
+
+# production
+frontend/build/
+frontend/coverage/
+
+# logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+##################################
+# BACKEND (Python / FastAPI)
+##################################
+
+# virtual environment
+backend/venv/
+
+# python cache
+backend/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+backend/**/*.pyd
+
+# uploaded user files (important!)
+backend/uploads/
+
+# environment variables
+backend/.env
+
+##################################
+# OS / Editor junk
+##################################
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+##################################
+# General
+##################################
+
+*.log

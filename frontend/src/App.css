@@ -1,0 +1,209 @@
+/* RESET */
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background: #f4f6f8;
+  color: #1f2937;
+}
+
+/* NAVBAR */
+.navbar {
+  height: 72px;
+  background: #ffffff;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.nav-links span {
+  margin-right: 20px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.nav-links span:hover {
+  color: #2563eb;
+}
+
+.avatar {
+  background: #2563eb;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* ===== MAIN EDITOR LAYOUT ===== */
+
+.app-bg {
+  height: 100vh;
+  background: #f4f6f8;
+  display: flex;
+  flex-direction: column;
+}
+
+/* THIS WAS THE MAJOR ISSUE */
+.main-container {
+  flex: 1; /* ✅ TAKE ALL REMAINING VERTICAL SPACE */
+  display: flex;
+  gap: 32px;
+  padding: 24px 32px;
+  box-sizing: border-box;
+}
+
+/* CARD STYLE */
+.card {
+  flex: 1;                 /* ✅ NOT width: 50% */
+  height: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 32px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== LEFT PANEL ===== */
+
+.upload-box {
+  flex: 1; /* ✅ FILL VERTICALLY */
+  border: 2px dashed #c7d2fe;
+  border-radius: 12px;
+  margin: 20px 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  color: #475569;
+}
+
+.upload-box p {
+  margin: 8px 0;
+  font-weight: 500;
+}
+
+.upload-box span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* PRIMARY BUTTON */
+.primary-btn {
+  align-self: flex-start;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ===== CHAT PANEL ===== */
+
+.chat-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* CHAT BODY SHOULD GROW */
+.chat-body {
+  flex: 1;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+}
+
+.chat-msg {
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  max-width: 80%;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* USER MESSAGE */
+.chat-msg.user {
+  background: #2563eb;
+  color: white;
+  margin-left: auto;
+}
+
+/* AI MESSAGE */
+.chat-msg.ai {
+  background: #e5e7eb;
+  color: #0f172a;
+}
+
+/* CHAT INPUT */
+.chat-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-input span {
+  font-size: 20px;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.chat-input input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.chat-input button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background: #1d4ed8;
+}
+
+/* ✅ FOOTER COMPLETELY REMOVED */
