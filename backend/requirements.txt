@@ -6,3 +6,17 @@ pymupdf
 python-multipart
 google-generativeai
 pydantic
+reportlab
+
+
+
+
+python-docx
+python-pptx
+pandas
+openpyxl
+
+
+python-dotenv
+
+

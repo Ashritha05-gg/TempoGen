@@ -1,0 +1,23 @@
+/* Navbar.css */
+.navbar {
+  height: 64px;
+  background: #9cc0e3;  /* light */
+  color: #0f172a;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 100;
+}
+
+
+.navbar a {
+  color: #e5e7eb;
+  text-decoration: none;
+  margin-left: 16px;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  color: white;
+}

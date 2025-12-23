@@ -1,0 +1,30 @@
+.template-page {
+  padding: 32px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.template-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+}
+
+.template-card:hover {
+  transform: translateY(-4px);
+}
+
+.template-card.active {
+  border-color: #2563eb;
+  background: #eef4ff;
+}

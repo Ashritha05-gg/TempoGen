@@ -56,10 +56,12 @@
 //   );
 // }
 
+// src/components/UploadPanel.jsx
+
 import axios from "axios";
 
-export default function UploadPanel({ onUploadSuccess }) {
-
+export default function UploadPanel({ sessionId, onUploadSuccess }) {
+  
   const handleUpload = async (e) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -69,14 +71,22 @@ export default function UploadPanel({ onUploadSuccess }) {
       formData.append("files", file);
     }
 
+    // 🔥 required for backend
+    formData.append("session_id", sessionId);
+
     try {
       const res = await axios.post(
         "http://127.0.0.1:8000/upload_files",
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        }
       );
 
       console.log("UPLOAD SUCCESS:", res.data);
-      onUploadSuccess();
+      onUploadSuccess(); // trigger UI change
 
     } catch (err) {
       console.error("UPLOAD ERROR:", err?.response || err.message);
@@ -85,7 +95,7 @@ export default function UploadPanel({ onUploadSuccess }) {
   };
 
   return (
-    <>
+    <div>
       <h3>Upload Source Materials</h3>
 
       <label className="upload-box">
@@ -96,10 +106,14 @@ export default function UploadPanel({ onUploadSuccess }) {
           onChange={handleUpload}
           accept=".pdf,.docx,.ppt,.pptx,.xls,.xlsx"
         />
-        ☁️
-        <p>Drop PDF, PPT, Excel, DOCX files here</p>
-        <span>or click to browse</span>
+
+        <div style={{ fontSize: 40 }}>📎</div>
+        <p>Attach PDF, PPT, Excel, DOCX files</p>
+
+        <span style={{ color: "#2563eb" }}>
+          Click to select files
+        </span>
       </label>
-    </>
+    </div>
   );
 }
