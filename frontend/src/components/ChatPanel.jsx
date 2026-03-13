@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useState } from "react";
 import axios from "axios";
 
@@ -34,6 +32,7 @@ export default function ChatPanel({ sessionId, onUpdateDocument }) {
     const imageObjs = images.map((img) => ({
       name: img.name,
       url: URL.createObjectURL(img),
+      //url: `http://localhost:8000/uploads/${img.name}`
     }));
     setUploadedImages((prev) => [...prev, ...imageObjs]);
 
@@ -70,21 +69,51 @@ export default function ChatPanel({ sessionId, onUpdateDocument }) {
     scrollToBottom();
 
     // 🖼 IMAGE COMMAND (frontend only)
-    const isImageCmd =
-      prompt.toLowerCase().includes("add this image") ||
-      prompt.toLowerCase().includes("use the uploaded image");
+    // const isImageCmd =
+    //   prompt.toLowerCase().includes("add this image") ||
+    //   prompt.toLowerCase().includes("use the uploaded image");
 
-    if (isImageCmd && uploadedImages.length > 0) {
-      onUpdateDocument((prev) =>
-        prev.map((sec) => ({
+    // if (isImageCmd && uploadedImages.length > 0) {
+    //   onUpdateDocument((prev) =>
+    //     prev.map((sec) => ({
+    //       ...sec,
+    //       images: [...(sec.images || []), ...uploadedImages],
+    //     }))
+    //   );
+
+    //   setMessages((p) => [...p, { role: "ai", text: "🖼 Image added to section." }]);
+    //   return;
+    // }
+
+
+    // 🖼 IMAGE INSERTION (section-aware, no fixed keywords)
+const lowerPrompt = prompt.toLowerCase();
+
+if (uploadedImages.length > 0) {
+  let inserted = false;
+
+  onUpdateDocument((prev) =>
+    prev.map((sec) => {
+      if (lowerPrompt.includes(sec.section.toLowerCase())) {
+        inserted = true;
+
+        return {
           ...sec,
           images: [...(sec.images || []), ...uploadedImages],
-        }))
-      );
+        };
+      }
+      return sec;
+    })
+  );
 
-      setMessages((p) => [...p, { role: "ai", text: "🖼 Image added to section." }]);
-      return;
-    }
+  if (inserted) {
+    setMessages((p) => [
+      ...p,
+      { role: "ai", text: "🖼 Image inserted into the document." },
+    ]);
+    return;
+  }
+}
 
     // ---------- TEXT GENERATION ----------
     setLoading(true);

@@ -1,12 +1,9 @@
-const academicTemplate = {
+export default {
   id: "academic",
   name: "Academic Report",
-  fontFamily: "Times New Roman",
-  headingSize: 22,
-  bodySize: 14,
-  lineHeight: 1.8,
+  font: "Times-Roman",
+  bodySize: 12,
+  lineHeight: 1.6,
   margin: 60,
-  sectionNumbering: true
+  border: false,
 };
-
-export default academicTemplate;

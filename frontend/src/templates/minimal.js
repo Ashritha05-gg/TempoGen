@@ -1,9 +1,9 @@
 export default {
   id: "minimal",
   name: "Minimal",
-  fontFamily: "Inter",
-  fontSize: 13,
-  lineHeight: 1.6,
-  headingSize: 18,
-  margin: 72,
+  font: "Courier",
+  bodySize: 11,
+  lineHeight: 1.5,
+  margin: 40,
+  border: true,
 };

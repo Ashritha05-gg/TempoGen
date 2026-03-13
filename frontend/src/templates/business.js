@@ -1,12 +1,9 @@
-const businessTemplate = {
+export default {
   id: "business",
   name: "Business Report",
-  fontFamily: "Inter, Arial",
-  headingSize: 18,
-  bodySize: 13,
+  font: "Helvetica",
+  bodySize: 11,
   lineHeight: 1.4,
-  margin: 40,
-  sectionNumbering: false
+  margin: 50,
+  border: false,
 };
-
-export default businessTemplate;

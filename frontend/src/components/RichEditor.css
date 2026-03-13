@@ -1,0 +1,103 @@
+
+/* =========================
+   Rich Editor Layout
+========================= */
+
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+/* =========================
+   Toolbar
+========================= */
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.editor-toolbar button {
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.editor-toolbar button:hover {
+  background: #f3f4f6;
+}
+
+.editor-toolbar select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+}
+
+.editor-toolbar input[type="color"] {
+  width: 36px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* =========================
+   Editable Area
+========================= */
+
+.editor-content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: "Times New Roman", serif;
+  min-height: 100%;
+}
+
+/* TipTap editor root */
+.editor-content .ProseMirror {
+  min-height: 100%;
+  outline: none;
+}
+
+/* Headings */
+.editor-content h1,
+.editor-content h2,
+.editor-content h3 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+/* Paragraphs */
+.editor-content p {
+  margin-bottom: 14px;
+}
+
+/* Lists */
+.editor-content ul {
+  padding-left: 24px;
+  margin-bottom: 14px;
+}
+.editor-content {
+  font-size: 16px;
+}
+
+.editor-content [style*="font-size"] {
+  line-height: 1.6;
+}

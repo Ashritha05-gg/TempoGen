@@ -1,196 +1,42 @@
+// src/App.jsx
 
-// import { useEffect, useState } from "react";
-// import Navbar from "./components/Navbar";
-// import ChatPanel from "./components/ChatPanel";
-// import Preview from "./components/preview";
-// import Sidebar from "./components/Sidebar";
-// import Landing from "./components/Landing";
-
-// import "./App.css";
-
-// function App() {
-//   const [sessions, setSessions] = useState([]);
-//   const [activeSessionId, setActiveSessionId] = useState(null);
-//   const [documentsBySession, setDocumentsBySession] = useState({});
-//   const [sidebarOpen, setSidebarOpen] = useState(true);
-//   const [activeTemplate,setActiveTemplate] =useState(null);
-
-//   // --------------------------------------------------
-//   // restore from localStorage (ONCE)
-//   // --------------------------------------------------
-//   useEffect(() => {
-//     try {
-//       const storedSessions = JSON.parse(localStorage.getItem("tg_sessions"));
-//       const storedDocs = JSON.parse(localStorage.getItem("tg_documents"));
-//       const storedActive = localStorage.getItem("tg_active_session");
-
-//       if (Array.isArray(storedSessions)) setSessions(storedSessions);
-//       if (storedDocs) setDocumentsBySession(storedDocs);
-//       if (storedActive) setActiveSessionId(storedActive);
-//     } catch (err) {
-//       console.warn("Failed to restore saved sessions");
-//     }
-//   }, []);
-
-//   // --------------------------------------------------
-//   // persist to localStorage
-//   // --------------------------------------------------
-//   useEffect(() => {
-//     localStorage.setItem("tg_sessions", JSON.stringify(sessions));
-//     localStorage.setItem("tg_documents", JSON.stringify(documentsBySession));
-
-//     if (activeSessionId) {
-//       localStorage.setItem("tg_active_session", activeSessionId);
-//     } else {
-//       localStorage.removeItem("tg_active_session");
-//     }
-//   }, [sessions, documentsBySession, activeSessionId]);
-
-//   // --------------------------------------------------
-//   // create new document / chat
-//   // --------------------------------------------------
-//   const handleNewChat = () => {
-//     const id = String(Date.now());
-//     const title = `Document ${sessions.length + 1}`;
-
-//     setSessions((prev) => [...prev, { id, title }]);
-//     setActiveSessionId(id);
-
-//     setDocumentsBySession((prev) => ({
-//       ...prev,
-//       [id]: [],
-//     }));
-//   };
-
-//   const handleSelectChat = (id) => {
-//     setActiveSessionId(id);
-//   };
-
-//   // --------------------------------------------------
-//   // update document for active session
-//   // --------------------------------------------------
-//   const handleUpdateDocumentForActive = (updater) => {
-//     if (!activeSessionId) return;
-
-//     setDocumentsBySession((prev) => {
-//       const current = prev[activeSessionId] || [];
-//       const next = typeof updater === "function" ? updater(current) : updater;
-
-//       return {
-//         ...prev,
-//         [activeSessionId]: next,
-//       };
-//     });
-//   };
-
-//   const activeSections = activeSessionId
-//     ? documentsBySession[activeSessionId] || []
-//     : [];
-
-//   // --------------------------------------------------
-//   // download (unchanged for now)
-//   // --------------------------------------------------
-//   const handleDownload = async () => {
-//   if (!activeSessionId) return;
-
-//   const sections = documentsBySession[activeSessionId] || [];
-
-//   const res = await fetch("http://localhost:8000/export_pdf", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({ sections }),
-//   });
-
-//   const blob = await res.blob();
-//   const url = window.URL.createObjectURL(blob);
-
-//   window.open(url, "_blank");
-// };
-
-
-//   return (
-//     <div className="app-root">
-//       <Navbar />
-
-//       <div className="app-shell">
-//         {/* Sidebar ONLY when a document exists */}
-//         {activeSessionId && (
-//           <Sidebar
-//             open={sidebarOpen}
-//             onToggle={() => setSidebarOpen((o) => !o)}
-//             sessions={sessions}
-//             activeSessionId={activeSessionId}
-//             onSelectSession={handleSelectChat}
-//             onNewChat={handleNewChat}
-//           />
-//         )}
-
-//         <main className="app-main">
-//           {/* LANDING */}
-          
-//             {sessions.length === 0 ? (
-//   <div className="landing-only">
-//     <Landing onNewChat={handleNewChat} />
-//   </div>
-// ) : (
-//   <div className="workspace">
-
-//               {/* LEFT */}
-//               <section className="workspace-left">
-//                 <div className="workspace-left-header">
-//                   <h2>Live Document Preview</h2>
-//                   <button
-//                     className="download-btn"
-//                     onClick={handleDownload}
-//                   >
-//                     ⬇ Download / Print
-//                   </button>
-//                 </div>
-
-//                 <div className="preview-wrapper">
-//                   <Preview sections={activeSections} />
-//                 </div>
-//               </section>
-
-//               {/* RIGHT */}
-//               <section className="workspace-right">
-//                 <ChatPanel
-//                   sessionId={activeSessionId}
-//                   onUpdateDocument={handleUpdateDocumentForActive}
-//                 />
-//               </section>
-//             </div>
-//           )}
-//         </main>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-// src/App.js
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ChatPanel from "./components/ChatPanel";
-import Preview from "./components/preview";
+import Preview from "./components/Preview";
 import Sidebar from "./components/Sidebar";
 import Landing from "./components/Landing";
+import AboutUs from "./pages/AboutUs";
 import TemplatePage from "./pages/TemplatePage";
+
+/* ⭐ Resume Feature Imports (ADDED) */
+import Resume_gen from "./components/Resume_gen";
+import Reusme_Template from "./components/Resume_Templates";
+import Minimal_Resume from "./pages/Minimal_Resume";
 
 import "./App.css";
 
-function App() {
+/* ================= MAIN APP CONTENT ================= */
+
+function AppContent() {
+  const navigate = useNavigate();
+
   const [sessions, setSessions] = useState([]);
   const [activeSessionId, setActiveSessionId] = useState(null);
   const [documentsBySession, setDocumentsBySession] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTemplate, setActiveTemplate] = useState("academic");
 
-  /* -------------------- RESTORE -------------------- */
+  const [showDownloadPopup, setShowDownloadPopup] = useState(false);
+
+  /* ---------------- RESTORE ---------------- */
   useEffect(() => {
     try {
       const s = JSON.parse(localStorage.getItem("tg_sessions"));
@@ -205,7 +51,7 @@ function App() {
     } catch {}
   }, []);
 
-  /* -------------------- PERSIST -------------------- */
+  /* ---------------- PERSIST ---------------- */
   useEffect(() => {
     localStorage.setItem("tg_sessions", JSON.stringify(sessions));
     localStorage.setItem("tg_documents", JSON.stringify(documentsBySession));
@@ -217,7 +63,7 @@ function App() {
       localStorage.setItem("tg_template", activeTemplate);
   }, [sessions, documentsBySession, activeSessionId, activeTemplate]);
 
-  /* -------------------- NEW DOC -------------------- */
+  /* ---------------- NEW DOCUMENT ---------------- */
   const handleNewChat = () => {
     const id = String(Date.now());
     const title = `Document ${sessions.length + 1}`;
@@ -227,114 +73,158 @@ function App() {
     setDocumentsBySession((p) => ({ ...p, [id]: [] }));
   };
 
-  /* -------------------- UPDATE DOC -------------------- */
-  const handleUpdateDocumentForActive = (updater) => {
-    if (!activeSessionId) return;
-
+  /* ---------------- UPDATE SINGLE SECTION ---------------- */
+  const handleUpdateSection = (index, newHtml) => {
     setDocumentsBySession((prev) => ({
       ...prev,
-      [activeSessionId]:
-        typeof updater === "function"
-          ? updater(prev[activeSessionId] || [])
-          : updater,
+      [activeSessionId]: prev[activeSessionId].map((sec, i) =>
+        i === index ? { ...sec, content: newHtml } : sec
+      ),
     }));
   };
 
-  const activeSections = activeSessionId
-    ? documentsBySession[activeSessionId] || []
-    : [];
+  const activeSections =
+    activeSessionId && documentsBySession[activeSessionId]
+      ? documentsBySession[activeSessionId]
+      : [];
 
-  /* -------------------- DOWNLOAD -------------------- */
-  const handleDownload = async () => {
-    if (!activeSessionId) return;
+  /* ================= BUILD FULL HTML ================= */
+  const getFullHtml = () =>
+    activeSections
+      .map(
+        (sec) =>
+          `<h2>${sec.section || ""}</h2>${sec.content || ""}`
+      )
+      .join("");
+
+  /* ================= DEFAULT DOWNLOAD ================= */
+  const downloadDefault = async () => {
+    const fullHtml = getFullHtml();
 
     const res = await fetch("http://localhost:8000/export_pdf", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sections: activeSections,
-        template: activeTemplate,
-      }),
+      body: JSON.stringify({ html: fullHtml }),
     });
 
     const blob = await res.blob();
     window.open(URL.createObjectURL(blob));
+
+    setShowDownloadPopup(false);
   };
 
+  /* ================= GO TO TEMPLATE PAGE ================= */
+  const goToTemplates = () => {
+    localStorage.setItem("tg_download_html", getFullHtml());
+    navigate("/templates");
+    setShowDownloadPopup(false);
+  };
+
+  /* ================= UI ================= */
+  return (
+    <div className="app-shell">
+      {activeSessionId && (
+        <Sidebar
+          open={sidebarOpen}
+          onToggle={() => setSidebarOpen((o) => !o)}
+          sessions={sessions}
+          activeSessionId={activeSessionId}
+          onSelectSession={setActiveSessionId}
+          onNewChat={handleNewChat}
+        />
+      )}
+
+      <main className="app-main">
+        {sessions.length === 0 ? (
+          <div className="landing-only">
+            <Landing onNewChat={handleNewChat} />
+          </div>
+        ) : (
+          <div className="workspace">
+
+            {/* ---------- LEFT: PREVIEW ---------- */}
+            <section className="workspace-left">
+              <div className="workspace-left-header">
+                <h2>Live Document Preview</h2>
+
+                <button
+                  className="download-btn"
+                  onClick={() => setShowDownloadPopup(true)}
+                >
+                  ⬇ Download / Print
+                </button>
+              </div>
+
+              <Preview
+                sections={activeSections}
+                template={activeTemplate}
+                onUpdateSection={handleUpdateSection}
+              />
+            </section>
+
+            {/* ---------- RIGHT: CHAT ---------- */}
+            <section className="workspace-right">
+              <ChatPanel
+                sessionId={activeSessionId}
+                onUpdateDocument={(updater) =>
+                  setDocumentsBySession((prev) => ({
+                    ...prev,
+                    [activeSessionId]:
+                      typeof updater === "function"
+                        ? updater(prev[activeSessionId] || [])
+                        : updater,
+                  }))
+                }
+              />
+            </section>
+          </div>
+        )}
+      </main>
+
+      {/* ================= DOWNLOAD POPUP ================= */}
+      {showDownloadPopup && (
+        <div className="download-modal-overlay">
+          <div className="download-modal">
+
+            <h3>Download Options</h3>
+
+            <button onClick={downloadDefault}>
+              Download Current Version
+            </button>
+
+            <button onClick={goToTemplates}>
+              Choose Template
+            </button>
+
+            <button onClick={() => setShowDownloadPopup(false)}>
+              Cancel
+            </button>
+
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ================= ROUTER WRAPPER ================= */
+
+export default function App() {
   return (
     <Router>
-      {/* NAVBAR – color comes ONLY from Navbar.css */}
       <Navbar />
 
       <Routes>
-        {/* ================= MAIN APP ================= */}
-        <Route
-          path="/"
-          element={
-            <div className="app-shell">
-              {activeSessionId && (
-                <Sidebar
-                  open={sidebarOpen}
-                  onToggle={() => setSidebarOpen((o) => !o)}
-                  sessions={sessions}
-                  activeSessionId={activeSessionId}
-                  onSelectSession={setActiveSessionId}
-                  onNewChat={handleNewChat}
-                />
-              )}
+        <Route path="/" element={<AppContent />} />
+        <Route path="/templates" element={<TemplatePage />} />
 
-              <main className="app-main">
-                {sessions.length === 0 ? (
-                  <div className="landing-only">
-                    <Landing onNewChat={handleNewChat} />
-                  </div>
-                ) : (
-                  <div className="workspace">
-                    {/* LEFT */}
-                    <section className="workspace-left">
-                      <div className="workspace-left-header">
-                        <h2>Live Document Preview</h2>
-                        <button
-                          className="download-btn"
-                          onClick={handleDownload}
-                        >
-                          ⬇ Download / Print
-                        </button>
-                      </div>
+        {/* ⭐ Resume Feature Routes (ADDED) */}
+        <Route path="/resume" element={<Resume_gen />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/resumeTemplate" element={<Reusme_Template />} />
+        <Route path="/minimal" element={<Minimal_Resume />} />
 
-                      <Preview
-                        sections={activeSections}
-                        template={activeTemplate}
-                      />
-                    </section>
-
-                    {/* RIGHT */}
-                    <section className="workspace-right">
-                      <ChatPanel
-                        sessionId={activeSessionId}
-                        onUpdateDocument={handleUpdateDocumentForActive}
-                      />
-                    </section>
-                  </div>
-                )}
-              </main>
-            </div>
-          }
-        />
-
-        {/* ================= TEMPLATES PAGE ================= */}
-        <Route
-          path="/templates"
-          element={
-            <TemplatePage
-              activeTemplate={activeTemplate}
-              onSelectTemplate={(tpl) => setActiveTemplate(tpl)}
-            />
-          }
-        />
       </Routes>
     </Router>
   );
 }
-
-export default App;

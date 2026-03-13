@@ -36,6 +36,8 @@ def chat_with_rag(session_id: str, user_prompt: str) -> str:
       - Uses document context for facts. 
       - Remembers previous turns via session_id. 
       - Supports ANY natural prompts. 
+      - Never repeat the same section heading more than once.
+      - Write multiple paragraphs under the same heading.
       - If the user asks for multiple sections (Executive Summary, Abstract, Results, etc.), 
         it formats the output as a mini-report with bold headings.
     """

@@ -1,21 +1,13 @@
-
-
-// src/components/Preview.jsx
 import React from "react";
-import ReactMarkdown from "react-markdown";
+import RichEditor from "./RichEditor";
 
-export default function Preview({ sections }) {
-  if (!Array.isArray(sections)) {
-    return <p style={{ color: "red" }}>Invalid document structure</p>;
-  }
+export default function Preview({ sections, onUpdateSection }) {
+  if (!Array.isArray(sections)) return null;
 
   if (sections.length === 0) {
     return (
       <div className="doc-page doc-page-empty">
-        <p>
-          Start by uploading your files and telling the assistant what to
-          generate.
-        </p>
+        <p>Start by uploading files and generating content.</p>
       </div>
     );
   }
@@ -25,19 +17,17 @@ export default function Preview({ sections }) {
       <div className="doc-page">
         {sections.map((sec, i) => (
           <div key={i} style={{ marginBottom: 32 }}>
-            {/* SECTION HEADING */}
+
+            {/* Section Heading */}
             <h2 className="doc-heading">{sec.section}</h2>
 
-            {/* MARKDOWN CONTENT (FIXED) */}
-            {sec.content && (
-              <div className="doc-paragraph">
-                <ReactMarkdown>
-                  {sec.content}
-                </ReactMarkdown>
-              </div>
-            )}
+            {/* Editable content */}
+            <RichEditor
+              content={sec.content || ""}
+              onChange={(html) => onUpdateSection(i, html)}
+            />
 
-            {/* IMAGES */}
+            {/* IMAGE RENDERING (ADD THIS) */}
             {Array.isArray(sec.images) &&
               sec.images.map((img, idx) => (
                 <div key={idx} style={{ marginTop: 12 }}>
@@ -55,11 +45,15 @@ export default function Preview({ sections }) {
                   </p>
                 </div>
               ))}
+
           </div>
         ))}
       </div>
     </div>
   );
 }
+
+
+
 
 

@@ -1,0 +1,96 @@
+Minimal_Resume.css
+.resume-page {
+  background: #f4f6f8;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.resume-container {
+  background: #ffffff;
+  width: 794px;          /* A4 width */
+  padding: 40px 50px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #111;
+}
+
+/* Header */
+.resume-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.contact {
+  font-size: 10.5px;
+  color: #444;
+}
+
+/* Sections */
+section {
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  border-bottom: 1px solid #000;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* Text */
+.text {
+  margin: 0;
+}
+
+/* Skills */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.skills li {
+  font-size: 11px;
+}
+
+/* Items */
+.item {
+  margin-bottom: 10px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.company {
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.item ul {
+  margin: 4px 0 0 16px;
+}
+
+.item ul li {
+  margin-bottom: 4px;
+}
